@@ -9,11 +9,13 @@ import { RPCError } from "./rpc-error";
 import { Router, ResponseLike } from "./rpc";
 
 interface RpcServerOptions {
+  host?: string;
   port?: number;
+  backlog?: number;
   router: Router<any, any>;
 }
 
-export function startRpcServer({ port = 3000, router }: RpcServerOptions) {
+export function startRpcServer({ host = "localhost", port = 3000, backlog = 511, router }: RpcServerOptions) {
   const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const url = new URL(req.url || "", `http://${req.headers.host}`);
     const method = req.method || "GET";
@@ -61,8 +63,8 @@ export function startRpcServer({ port = 3000, router }: RpcServerOptions) {
     }
   });
 
-  server.listen(port, () => {
-    console.log(`🛰️ RPC server running at http://localhost:${port}/rpc/:namespace/:method`);
+  server.listen(port, host, backlog, () => {
+    console.log(`🚀 RPC server running at http://${host}:${port}`);
   });
 
   return server;
