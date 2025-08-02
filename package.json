@@ -1,6 +1,6 @@
 {
   "name": "@raphaelceccato/simple-rpc",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A lightweight, typed, middleware-based RPC (Remote Procedure Call) library with Zod validation and built-in HTTP server.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
