@@ -27,6 +27,11 @@ export class Procedure<I extends ZodTypeAny, O extends ZodTypeAny, C = unknown> 
     public middlewares: Middleware<C>[] = []
   ) {}
 
+  use(mw: Middleware<C>): this {
+    this.middlewares.push(mw);
+    return this;
+  }
+
   async call(ctx: C, input: unknown, res: ResponseLike): Promise<z.infer<O>> {
     const parsedInput = this.inputSchema.parse(input);
     const composed = this.middlewares.reduceRight<() => Promise<any>>(
